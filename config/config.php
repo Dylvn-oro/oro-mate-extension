@@ -10,6 +10,7 @@ use Dylvn\OroMateExtension\Capability\DatagridTool;
 use Dylvn\OroMateExtension\Capability\EntityConfigTool;
 use Dylvn\OroMateExtension\Database\OroConnectionFactory;
 use Dylvn\OroMateExtension\Decoder\EntityConfigDecoder;
+use Dylvn\OroMateExtension\DependencyInjection\EntityToolsAvailabilityPass;
 use Dylvn\OroMateExtension\Repository\EntityConfigRepositoryInterface;
 use Dylvn\OroMateExtension\Repository\EntityFieldRepositoryInterface;
 use Dylvn\OroMateExtension\Repository\PdoEntityConfigRepository;
@@ -17,11 +18,12 @@ use Dylvn\OroMateExtension\Repository\PdoEntityFieldRepository;
 use Dylvn\OroMateExtension\Service\OroBundleLocator;
 use Dylvn\OroMateExtension\Service\OroDatagridEventLocator;
 use Dylvn\OroMateExtension\Service\OroDatagridLocator;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
-return static function (ContainerConfigurator $container): void {
+return static function (ContainerConfigurator $container, ContainerBuilder $builder): void {
     // Parameters
     $container->parameters()
         ->set('oro_mate_extension.root_dir', '%mate.root_dir%')
@@ -65,4 +67,6 @@ return static function (ContainerConfigurator $container): void {
             service(EntityFieldRepositoryInterface::class),
             service(EntityConfigDecoder::class),
         ]);
+
+    $builder->addCompilerPass(new EntityToolsAvailabilityPass());
 };

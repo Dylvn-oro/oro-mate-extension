@@ -49,7 +49,7 @@ They require `oro_mate_extension.database_url` to be set in your `mate/config.ph
 $container->parameters()->set('oro_mate_extension.database_url', 'pgsql://user:password@localhost:5432/orocommerce');
 ```
 
-If not configured, the tools are still available but return a configuration error.
+If not configured, the entity tools will not appear in the MCP tool list at all.
 
 ### `oro_entity_list`
 
